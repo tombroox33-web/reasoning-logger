@@ -19,11 +19,7 @@ export interface AIReasoningEvent {
 	type: AIReasoningEventType;
 	content: string;
 	model?: string;
-	metadata?: {
-		tokens?: number;
-		latencyMs?: number;
-		filePath?: string;
-	};
+	metadata?: Record<string, any>;
 	toolData?: {
 		name?: string;
 		arguments?: object;
