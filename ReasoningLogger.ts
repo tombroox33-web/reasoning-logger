@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { v4 as uuidv4 } from "uuid";
-import { AIReasoningEvent, AIReasoningEventType } from "./types";
+import { AIReasoningEvent } from "./types";
 
 /**
  * Manages the creation and storage of AI reasoning events.
@@ -10,18 +10,27 @@ export class ReasoningLogger {
 	private _events: AIReasoningEvent[] = [];
 	private _sessionId: string | null = null;
 
+	private _onDidChangeEvents = new vscode.EventEmitter<void>();
+	public readonly onDidChangeEvents: vscode.Event<void> =
+		this._onDidChangeEvents.event;
+
 	/**
 	 * Starts a new logging session.
 	 * @returns The new session ID.
 	 */
 	public startSession(): string {
 		this._sessionId = uuidv4();
-		this._events = [];
-		this.log({
+		const startEvent: AIReasoningEvent = {
+			id: uuidv4(),
+			sessionId: this._sessionId,
+			timestamp: new Date().toISOString(),
 			type: "system_log",
 			content: `Session started: ${this._sessionId}`,
-		});
+		};
+		this._events = [startEvent];
 		console.log(`[ReasoningLogger] New session started: ${this._sessionId}`);
+
+		this._onDidChangeEvents.fire();
 		return this._sessionId;
 	}
 
@@ -47,6 +56,7 @@ export class ReasoningLogger {
 		};
 
 		this._events.push(event);
+		this._onDidChangeEvents.fire();
 	}
 
 	public getEvents(): ReadonlyArray<AIReasoningEvent> {

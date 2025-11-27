@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { ReasoningLogger } from "./ReasoningLogger";
+import { ReasoningViewProvider } from "./ReasoningViewProvider";
 
 /**
  * This method is called when your extension is activated.
@@ -12,6 +13,15 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Create a single logger instance for the extension
 	const logger = new ReasoningLogger();
+
+	// Register the Webview View Provider
+	const provider = new ReasoningViewProvider(context.extensionUri, logger);
+	context.subscriptions.push(
+		vscode.window.registerWebviewViewProvider(
+			ReasoningViewProvider.viewType,
+			provider
+		)
+	);
 
 	// Register a command to start a new logging session
 	const startSessionCommand = vscode.commands.registerCommand(
