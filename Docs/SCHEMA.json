@@ -1,0 +1,6 @@
+{
+  "source": "string",
+  "timestamp": "ISO8601",
+  "context": "string",
+  "label": "string"
+}
