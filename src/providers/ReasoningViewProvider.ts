@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
-import { ReasoningLogger } from "./ReasoningLogger";
-import { AIReasoningEvent } from "./types";
+import { ReasoningLogger } from "../managers/ReasoningLogger";
+import { AIReasoningEvent } from "../types";
 
 export class ReasoningViewProvider implements vscode.WebviewViewProvider {
 	public static readonly viewType = "reasoning-logger.view";
@@ -68,35 +68,33 @@ export class ReasoningViewProvider implements vscode.WebviewViewProvider {
 			</head>
 			<body>
 				<h1>Session Events</h1>
-				${
-					events.length === 0
-						? "<p>No events logged yet. Start a session to begin.</p>"
-						: events
-								.map(
-									(event) => `
+				${events.length === 0
+				? "<p>No events logged yet. Start a session to begin.</p>"
+				: events
+					.map(
+						(event) => `
 						<div class="event">
 							<div class="event-header">
 								<span class="event-type event-type-${event.type}">${event.type}</span>
 								<span class="timestamp">${new Date(event.timestamp).toLocaleTimeString()}</span>
 							</div>
 							<div class="event-content">${escapeHtml(event.content)}</div>
-							${
-								event.metadata
-									? `<dl class="event-meta">
+							${event.metadata
+								? `<dl class="event-meta">
 										${Object.entries(event.metadata)
-											.map(
-												([key, value]) =>
-													`<dt>${escapeHtml(key)}</dt><dd>${escapeHtml(String(value))}</dd>`
-											)
-											.join("")}
+									.map(
+										([key, value]) =>
+											`<dt>${escapeHtml(key)}</dt><dd>${escapeHtml(String(value))}</dd>`
+									)
+									.join("")}
 									   </dl>`
-									: ""
+								: ""
 							}
 						</div>
 					`
-								)
-								.join("")
-				}
+					)
+					.join("")
+			}
 			</body>
 			</html>`;
 	}

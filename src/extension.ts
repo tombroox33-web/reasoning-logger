@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
-import { ReasoningLogger } from "./ReasoningLogger";
-import { ReasoningViewProvider } from "./ReasoningViewProvider";
+import { ReasoningLogger } from "./managers/ReasoningLogger";
+import { ReasoningViewProvider } from "./providers/ReasoningViewProvider";
 import { AIReasoningEvent } from "./types";
 
 /**
