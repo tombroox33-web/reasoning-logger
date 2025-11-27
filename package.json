@@ -1,0 +1,72 @@
+{
+	"name": "reasoning-logger",
+	"displayName": "Reasoning Logger",
+	"description": "Log and visualize AI reasoning events.",
+	"version": "0.0.1",
+	"publisher": "tombroox33",
+	"engines": {
+		"vscode": "^1.80.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:reasoning-logger.start",
+		"onView:reasoning-logger.view"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "reasoning-logger-explorer",
+					"title": "Reasoning Logger",
+					"icon": "media/icon.svg"
+				}
+			]
+		},
+		"views": {
+			"reasoning-logger-explorer": [
+				{
+					"id": "reasoning-logger.view",
+					"name": "Events"
+				}
+			]
+		},
+		"commands": [
+			{
+				"command": "reasoning-logger.start",
+				"title": "Reasoning Logger: Start Session"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.80.0",
+		"@types/glob": "^8.1.0",
+		"@types/mocha": "^10.0.1",
+		"@types/node": "20.2.5",
+		"@types/uuid": "^9.0.2",
+		"@typescript-eslint/eslint-plugin": "^5.59.8",
+		"@typescript-eslint/parser": "^5.59.8",
+		"eslint": "^8.41.0",
+		"glob": "^8.1.0",
+		"mocha": "^10.2.0",
+		"typescript": "^5.1.3",
+		"ts-loader": "^9.4.3",
+		"webpack": "^5.85.0",
+		"webpack-cli": "^5.1.1",
+		"@vscode/test-electron": "^2.3.2"
+	},
+	"dependencies": {
+		"uuid": "^9.0.0",
+		"fs-extra": "^11.1.1"
+	}
+}
